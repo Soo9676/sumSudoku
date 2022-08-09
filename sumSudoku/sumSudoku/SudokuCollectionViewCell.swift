@@ -9,4 +9,5 @@ import UIKit
 
 class SudokuCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var userTextField: UITextField!
 }
