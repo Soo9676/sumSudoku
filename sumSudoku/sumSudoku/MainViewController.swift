@@ -13,7 +13,21 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+//        updateTextFieldChange()
     }
+    
+//    func updateTextFieldChange() {
+//        let cells = self.sudokuCollectionView.visibleCells
+//
+//
+//
+//        for i in 0..<twoDimensionArray.endIndex^2 {
+////            self.textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+//            let textField = self.sudokuCollectionView.visibleCells[i].userTextField
+//            let indexPaths = self.sudokuCollectionView.indexPath(for: cells[i])
+//            textField.addTarget(self, action: #selector(SudokuCollectionViewCell.textFieldDidChange(_:)), for: .textFieldChanged())
+//        }
+//    }
     
     @IBOutlet weak var sudokuCollectionView: UICollectionView!
     
@@ -72,6 +86,26 @@ class MainViewController: UIViewController {
         
     }
     
+//    func getSumOfColumn(firstD: Int, secondD: Int, arr: [[Int]]) {
+//        for n in 0...secondD {
+//            arr[]
+//        }
+//    }
+    
+    @objc func textFieldChanged() {
+//        let i: Int = twoDimensionArray.endIndex - 1
+//        let j: Int = twoDimensionArray[i].endIndex - 1
+        
+        self.sumRowFirstlbl.text = "\(twoDimensionArray[0].reduce(0, +))"
+        self.sumRowSecondlbl.text = "\(twoDimensionArray[1].reduce(0, +))"
+        self.sumRowThirdlbl.text = "\(twoDimensionArray[2].reduce(0, +))"
+        
+        self.sumColFirstlbl.text = "\(twoDimensionArray[0][0] + twoDimensionArray[0][1] + twoDimensionArray[0][2] )"
+        self.sumColFirstlbl.text = "\(twoDimensionArray[1][0] + twoDimensionArray[1][1] + twoDimensionArray[1][2])"
+        self.sumColFirstlbl.text = "\(twoDimensionArray[2][0] + twoDimensionArray[2][1] + twoDimensionArray[2][2])"
+        
+    }
+    
     @IBAction func tapStartBtn(_ sender: Any) {
         createRandomNums()
         placeRandomNums()
@@ -81,6 +115,8 @@ class MainViewController: UIViewController {
         compareSumResults()
         showResultAlert()
     }
+    
+   
 }
 
 
@@ -90,14 +126,23 @@ extension MainViewController: UICollectionViewDelegate {
 }
 
 extension MainViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var collectionCount: Int = 9
-//        if let i = twoDimensionArray.endIndex {
-//            if let j = twoDimensionArray[i].endIndex {
-//                 collectionCount = 3*i + j + 1
-//            }
-//        }
-        return collectionCount
+        let i: Int = twoDimensionArray.endIndex - 1
+        let j: Int = twoDimensionArray[i].endIndex - 1
+//        return i*j
+        
+        func countCell(firstD: Int, secondD: Int, arr: [[Int]]) -> Int {
+            var totalCellCount: Int = 0
+            for n in 0...firstD {
+                totalCellCount += arr[n].count
+            }
+            return totalCellCount
+        }
+        
+        
+        
+        return countCell(firstD: i, secondD: j, arr: twoDimensionArray)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -105,8 +150,11 @@ extension MainViewController: UICollectionViewDataSource {
                 SudokuCollectionViewCell else {
                 return UICollectionViewCell()
             }
-        let row = indexPath.row/3
-        let column = indexPath.row%3
+        let i: Int = twoDimensionArray.endIndex - 1
+        let j: Int = twoDimensionArray[i].endIndex - 1
+        
+        let row = indexPath.row / (i + 1)
+        let column = indexPath.row % (j + 1)
         let value = twoDimensionArray[row][column]
         cell.userTextField.text = "\(value)"
         if value == 0 {
@@ -114,11 +162,8 @@ extension MainViewController: UICollectionViewDataSource {
         } else {
             cell.userTextField.textColor = .black
         }
-            
         return cell
     }
-    
-    
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
@@ -132,7 +177,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         let cellWidth = (width - widthPadding) / itemsPerRow
         let cellHeight = (height - heightPadding) / itemsPerColumn
         
-        return CGSize(width: cellWidth, height: cellHeight)
+        return CGSize(width: cellWidth - 1, height: cellHeight)
         
     }
 }
