@@ -7,18 +7,25 @@
 
 import UIKit
 
+protocol SendingStringInputDelegate {
+    func getTextFieldInput(_ cell: SudokuCollectionViewCell, didChangedInput value: String)
+}
+
 class SudokuCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userTextField: UITextField!
-    
-    @objc func textFieldDidChage(_sender: Any?) {
-        
+    var delegate: SendingStringInputDelegate?
+    var row: Int = 0
+    var column: Int = 0
+    var stringInput: String = "" {
+        willSet {
+            self.userTextField.text = newValue
+        }
     }
+//    self.userTextField.delegate = self
+    
 }
-
-extension SudokuCollectionViewCell: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-//        MainViewController.twoDi
     
-    }
+extension SudokuCollectionViewCell: UITextFieldDelegate {
+    
 }
