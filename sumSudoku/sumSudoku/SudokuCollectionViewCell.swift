@@ -8,13 +8,14 @@
 import UIKit
 
 protocol SendingStringInputDelegate {
-    func getTextFieldInput(_ cell: SudokuCollectionViewCell, didChangedInput value: String)
+    func getTextFieldInput( didChangedInput value: String )
 }
 
 class SudokuCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userTextField: UITextField!
     var delegate: SendingStringInputDelegate?
+    var index: Int = 0
     var row: Int = 0
     var column: Int = 0
     var stringInput: String = "" {
@@ -22,10 +23,14 @@ class SudokuCollectionViewCell: UICollectionViewCell {
             self.userTextField.text = newValue
         }
     }
-//    self.userTextField.delegate = self
-    
 }
-    
-extension SudokuCollectionViewCell: UITextFieldDelegate {
-    
+
+extension SudokuCollectionViewCell: SendingStringInputDelegate {
+    func getTextFieldInput( didChangedInput value: String) {
+//        MainViewController.twoDimensionArray[row][column] = Int(value) ?? 77
+//        print(twoDimensionArray)
+    }
 }
+
+
+
