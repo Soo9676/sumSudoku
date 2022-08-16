@@ -82,6 +82,8 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     func getTextFieldInput(didChangedInput value: String) {
         //텍스트필드에서 편집 끝나면 셀들 긁어와서 firstDimensionArray에 업데이트 후 콜렉션뷰 reload하기
         let cells = self.sudokuCollectionView.visibleCells
+        print(value)
+        
         for i in 0...8 {
             if let text = (cells[i] as! SudokuCollectionViewCell).userTextField.text {
                 let index = sudokuCollectionView.indexPath(for: cells[i])?.row
@@ -90,7 +92,6 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
             }
         }
         print(firstDimensionArray)
-//        sudokuCollectionView.reloadData()
     }
 
     
@@ -146,8 +147,8 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         (cells[firstRandomPosition] as? SudokuCollectionViewCell)?.userTextField.allowsEditingTextAttributes = false
         let firstRandomIndex = sudokuCollectionView.indexPath(for: cells[firstRandomPosition])
 
-        (sudokuCollectionView.cellForItem(at: firstRandomIndex!) as! SudokuCollectionViewCell).userTextField.backgroundColor = .clear
-        (cells[firstRandomPosition] as? SudokuCollectionViewCell)?.userTextField.backgroundColor = .systemRed
+        (sudokuCollectionView.cellForItem(at: firstRandomIndex!) as! SudokuCollectionViewCell).userTextField.backgroundColor = .systemRed
+//        (cells[firstRandomPosition] as? SudokuCollectionViewCell)?.userTextField.backgroundColor = .systemRed
         
         (cells[firstRandomPosition] as? SudokuCollectionViewCell)?.userTextField.allowsEditingTextAttributes = false
         firstDimensionArray[firstRandomPosition] = firstRandomVal
@@ -179,7 +180,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
 //        (cells[thirdRandomPosition] as? SudokuCollectionViewCell)?.userTextField.backgroundColor = .clear
         firstDimensionArray[thirdRandomPosition] = thirdRandomVal
         
-//        sudokuCollectionView.reloadData()
+        sudokuCollectionView.reloadData()
     }
     
     func resetSums() {
@@ -239,9 +240,13 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         setSumLabelText()
         setSumMatchlblText()
 //        inspectRandomNumHadSet()
+        print([firstRandomVal,secondRandomVal,thirdRandomVal])
         
-       print("TailOfStart")
-       print(firstDimensionArray)
+    
+        print("TailOfStart")
+        print(firstDimensionArray)
+        
+        
     }
     
     func showResultAlert(){
