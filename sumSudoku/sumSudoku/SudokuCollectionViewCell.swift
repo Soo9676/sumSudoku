@@ -18,6 +18,7 @@ class SudokuCollectionViewCell: UICollectionViewCell {
     var index: Int = 0
     var row: Int = 0
     var column: Int = 0
+    var bgColor: UIColor = .white
     var stringInput: String = "" {
         willSet {
             self.userTextField.text = newValue
