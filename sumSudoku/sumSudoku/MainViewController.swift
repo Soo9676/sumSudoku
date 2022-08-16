@@ -98,6 +98,9 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("textFieldBeginEditing")
         print(firstDimensionArray)
+        if textField.text == "0" {
+            textField.text = ""
+        }
         if firstDimensionArray == [0,0,0,0,0,0,0,0,0] {
             showResultAlert()
         }
@@ -106,12 +109,18 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
     
 //        sudokuCollectionView.getTextFieldInput(didChangedInput: textField.text ?? "")
+        if textField.text == "" {
+            textField.text == "0"
+        }
         print("textFieldEndEditing")
         getTextFieldInput(didChangedInput: textField.text ?? "")
         resetSums()
         compareSumResults()
         setSumLabelText()
-        
+        isSumMatchlbl.text = isSumnMatch
+        if isSumnMatch == true {
+            showResultAlert()
+        }
         sudokuCollectionView.reloadData()
     }
     
@@ -194,15 +203,6 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     
     func compareSumResults(){
         
-        for i in 0...8 {
-            if i/3 == 0 {
-                firstRowSum += firstDimensionArray[i]
-            } else if i/3 == 1 {
-                secondRowSum += firstDimensionArray[i]
-            } else if i/3 == 2 {
-                thirdRowSum += firstDimensionArray[i]
-            }
-        }
         
         for i in 0...8 {
             if i%3 == 0 {
@@ -211,6 +211,14 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
                 secondColSum += firstDimensionArray[i]
             } else if i%3 == 2 {
                 thirdColSum += firstDimensionArray[i]
+            }
+            
+            if i/3 == 0 {
+                firstRowSum += firstDimensionArray[i]
+            } else if i/3 == 1 {
+                secondRowSum += firstDimensionArray[i]
+            } else if i/3 == 2 {
+                thirdRowSum += firstDimensionArray[i]
             }
         }
         
