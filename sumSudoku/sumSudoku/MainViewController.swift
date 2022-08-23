@@ -117,7 +117,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         resetSums()
         compareSumResults()
         setSumLabelText()
-        isSumMatchlbl.text = isSumnMatch
+        isSumMatchlbl.text = "\(isSumnMatch)"
         if isSumnMatch == true {
             showResultAlert()
         }
