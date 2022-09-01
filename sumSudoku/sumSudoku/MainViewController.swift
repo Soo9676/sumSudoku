@@ -38,6 +38,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     
+    var sudokuSize: Int = 3
     
     var firstDimensionArray = [0,0,0,0,0,0,0,0,0]
     var twoDimensionArray = [[0,0,0],[0,0,0],[0,0,0]]
