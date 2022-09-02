@@ -54,16 +54,16 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vcd-iH-GZI">
                                                         <rect key="frame" x="198" y="0.0" width="85" height="35"/>
-                                                        <menu key="menu" id="NO9-6F-skN">
+                                                        <menu key="menu" title="행 개수" id="NO9-6F-skN">
                                                             <children>
                                                                 <command title="2" id="Q20-Fx-bmw"/>
-                                                                <command title="3" id="oeZ-Zf-r15"/>
+                                                                <command title="3" menuElementState="on" id="oeZ-Zf-r15"/>
                                                                 <command title="4" id="zuC-Zb-H2S"/>
                                                                 <command title="5" id="tmw-Fi-FbT"/>
                                                             </children>
                                                         </menu>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="tinted" title="선택"/>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -82,14 +82,16 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNA-9S-uRr">
                                                         <rect key="frame" x="198" y="0.0" width="85" height="35"/>
-                                                        <menu key="menu" id="4lJ-4L-fzr">
+                                                        <menu key="menu" title="열 개수" id="4lJ-4L-fzr">
                                                             <children>
-                                                                <command title="Item 1" id="DeZ-zX-NTX"/>
-                                                                <command title="Item 2" id="f04-sa-Aza"/>
+                                                                <command title="Item 1" id="DeZ-zX-NTX" userLabel="2"/>
+                                                                <command title="Item 1" menuElementState="on" id="QIb-co-uK0" userLabel="3"/>
+                                                                <command title="Item 1" id="7LD-ct-g2A" userLabel="4"/>
+                                                                <command title="Item 2" id="f04-sa-Aza" userLabel="5"/>
                                                             </children>
                                                         </menu>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="tinted" title="선택"/>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

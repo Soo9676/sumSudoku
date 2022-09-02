@@ -13,6 +13,70 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setRowButton()
+        setColButton()
+        
+        if sudokuRow == 2 {
+            sumRowFirstlbl.isHidden = false
+            sumRowSecondlbl.isHidden = false
+            sumRowThirdlbl.isHidden = true
+            sumRowFourthlbl.isHidden = true
+            sumRowFifthlbl.isHidden = true
+            
+        } else if sudokuRow == 3 {
+            sumRowFirstlbl.isHidden = false
+            sumRowSecondlbl.isHidden = false
+            sumRowThirdlbl.isHidden = false
+            sumRowFourthlbl.isHidden = true
+            sumRowFifthlbl.isHidden = true
+            
+        } else if sudokuRow == 4 {
+            sumRowFirstlbl.isHidden = false
+            sumRowSecondlbl.isHidden = false
+            sumRowThirdlbl.isHidden = false
+            sumRowFourthlbl.isHidden = false
+            sumRowFifthlbl.isHidden = true
+            
+        } else if sudokuRow == 5 {
+            sumRowFirstlbl.isHidden = false
+            sumRowSecondlbl.isHidden = false
+            sumRowThirdlbl.isHidden = false
+            sumRowFourthlbl.isHidden = false
+            sumRowFifthlbl.isHidden = false
+            
+        }
+        
+        if sudokuCol == 2 {
+            sumColFirstlbl.isHidden = false
+            sumColSecondlbl.isHidden = false
+            sumColThirdlbl.isHidden = true
+            sumColFourthlbl.isHidden = true
+            sumColFifthlbl.isHidden = true
+            
+        } else if sudokuCol == 3 {
+            sumColFirstlbl.isHidden = false
+            sumColSecondlbl.isHidden = false
+            sumColThirdlbl.isHidden = false
+            sumColFourthlbl.isHidden = true
+            sumColFifthlbl.isHidden = true
+            
+        } else if sudokuCol == 4 {
+            sumColFirstlbl.isHidden = false
+            sumColSecondlbl.isHidden = false
+            sumColThirdlbl.isHidden = false
+            sumColFourthlbl.isHidden = false
+            sumColFifthlbl.isHidden = true
+            
+        } else if sudokuCol == 5 {
+            sumColFirstlbl.isHidden = false
+            sumColSecondlbl.isHidden = false
+            sumColThirdlbl.isHidden = false
+            sumColFourthlbl.isHidden = false
+            sumColFifthlbl.isHidden = false
+            
+        }
+        
         setSumLabelText()
         setSumMatchlblText()
     }
@@ -76,6 +140,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     var fourthColSum: Int = 0
     var fifthColSum: Int = 0
     
+    var isNonZeroNumExists: Bool = false
     var isSumnMatch: Bool = false
 
     
@@ -102,6 +167,40 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         
     }
     
+    func setRowButton() {
+        let rowClosure = { [self](action : UIAction) in
+            print(action.title)
+            self.sudokuRow = Int(action.title) ?? 5
+            print("Row = \(sudokuRow)")
+        }
+        
+        optionRowButton.menu = UIMenu(children : [
+        UIAction(title: "2", handler: rowClosure),
+        UIAction(title: "3", handler: rowClosure),
+        UIAction(title: "4", handler: rowClosure),
+        UIAction(title: "5", handler: rowClosure)])
+        
+        optionRowButton.showsMenuAsPrimaryAction = true
+//        optionRowButton.changesSelectionAsPrimaryAction = true
+    }
+    
+    func setColButton() {
+        let colClosure = { [self](action : UIAction) in
+            print(action.title)
+            self.sudokuCol = Int(action.title) ?? 5
+            print("Col = \(sudokuCol)")
+        }
+        
+        optionRowButton.menu = UIMenu(children : [
+        UIAction(title: "2", handler: colClosure),
+        UIAction(title: "3", handler: colClosure),
+        UIAction(title: "4", handler: colClosure),
+        UIAction(title: "5", handler: colClosure)])
+        
+        optionColButton.showsMenuAsPrimaryAction = true
+//        optionRowButton.changesSelectionAsPrimaryAction = true
+    }
+    
     func getTextFieldInput(didChangedInput value: String) {
         //텍스트필드에서 편집 끝나면 셀들 긁어와서 firstDimensionArray에 업데이트 후 콜렉션뷰 reload하기
         let cells = self.sudokuCollectionView.visibleCells
@@ -124,8 +223,16 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         if textField.text == "0" {
             textField.text = ""
         }
-        if firstDimensionArray == [0,0,0,0,0,0,0,0,0] {
-            showResultAlert()
+        
+        //아직 숫자 배치가 안됐다면 게임을 시작하도록 경고창 띄
+        for i in 0...(cellCount - 1) {
+            if firstDimensionArray[i] == 0 {
+                isNonZeroNumExists == true
+            }
+            
+            if isNonZeroNumExists {
+                showResultAlert()
+            }
         }
     }
     
@@ -158,7 +265,11 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     }
     
     func createRandomPosition(){
-        var randomPositionRange = [0,1,2,3,4,5,6,7,8]
+        var randomPositionRange:[Int] = []
+        
+        for i in 0...(cellCount - 1) {
+            randomPositionRange.append(i)
+        }
         randomPositionRange.shuffle()
 
         firstRandomPosition = randomPositionRange.popLast()!
@@ -166,7 +277,10 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         thirdRandomPosition = randomPositionRange.popLast()!
     }
     func placeRandomNums(){
-        firstDimensionArray = [0,0,0,0,0,0,0,0,0]
+        firstDimensionArray = []
+        for _ in 0...(cellCount - 1) {
+            firstDimensionArray.append(0)
+        }
         
         let cells = self.sudokuCollectionView.visibleCells
         for cell in cells {
@@ -231,46 +345,73 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     
     func compareSumResults(){
         
-        for i in 0...8 {
-            if i%3 == 0 {
-                firstColSum += firstDimensionArray[i]
-            } else if i%3 == 1 {
-                secondColSum += firstDimensionArray[i]
-            } else if i%3 == 2 {
-                thirdColSum += firstDimensionArray[i]
+        for i in 0...(cellCount - 1) {
+            
+            for j in 0...(sudokuCol - 1) {
+                if i%sudokuCol == j {
+                    firstColSum += firstDimensionArray[i]
+                } else if i%sudokuCol == j {
+                    secondColSum += firstDimensionArray[i]
+                } else if i%sudokuCol == j {
+                    thirdColSum += firstDimensionArray[i]
+                } else if i%sudokuCol == j {
+                    fourthColSum += firstDimensionArray[i]
+                } else if i%sudokuCol == j {
+                    fifthColSum += firstDimensionArray[i]
+                }
             }
             
-            if i/3 == 0 {
-                firstRowSum += firstDimensionArray[i]
-            } else if i/3 == 1 {
-                secondRowSum += firstDimensionArray[i]
-            } else if i/3 == 2 {
-                thirdRowSum += firstDimensionArray[i]
+            for k in 0...(sudokuRow - 1) {
+                if i/sudokuCol == k {
+                    firstRowSum += firstDimensionArray[i]
+                } else if i/sudokuCol == k {
+                    secondRowSum += firstDimensionArray[i]
+                } else if i/sudokuCol == k {
+                    thirdRowSum += firstDimensionArray[i]
+                } else if i%sudokuCol == k {
+                    fourthRowSum += firstDimensionArray[i]
+                } else if i%sudokuCol == k {
+                    fifthRowSum += firstDimensionArray[i]
+                }
             }
         }
         
-        if firstRowSum == secondRowSum, firstRowSum == thirdRowSum, firstRowSum == firstColSum, firstRowSum == secondColSum, firstRowSum == thirdColSum {
-            isSumnMatch = true
+        var rowSums = [firstRowSum, secondRowSum,thirdRowSum, fourthRowSum, fifthRowSum]
+        var colSums = [firstColSum, secondColSum, thirdColSum, fourthColSum, fifthColSum]
+        
+        for i in 0...(sudokuRow - 2) {
+            if rowSums[i] == rowSums[i+1] {
+                isSumnMatch = true
+            } else {
+                isSumnMatch = false
+            }
+        }
+        
+        for i in 0...(sudokuCol - 2) {
+            if colSums[i] == colSums[i+1] {
+                isSumnMatch = true
+            } else {
+                isSumnMatch = false
+            }
         }
     }
     
-//    func inspectRandomNumHadSet() {
-//        for i in 0...8 {
-//            if firstDimensionArray[i] !== 0 {
-//                showResultAlert()
-//            }
-//        }
-//    }
-    
+    func setFistDimensionArray() {
+        firstDimensionArray = []
+        for i in 0...(sudokuRow*sudokuCol - 1) {
+            firstDimensionArray.append(0)
+        }
+    }
     
     @IBAction func tapStartBtn(_ sender: Any) {
         resetSums()
         print("HeadOfStart")
+        setFistDimensionArray()
         print(firstDimensionArray)
         
         createRandomNums() //시작버튼에서만 호출
         createRandomPosition() //시작버튼에서만 호출
-        placeRandomNums() //
+        placeRandomNums()
         compareSumResults()
         setSumLabelText()
         setSumMatchlblText()
@@ -286,7 +427,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     
     func showResultAlert(){
         if firstDimensionArray.contains(0) {
-            let alert = UIAlertController(title: "경고", message: "아직 숫자 입력 안됨\n버튼을 눌러 새게임을 시작하시겠습니까?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "경고", message: "아직 모든 숫자 입력 안됨\n버튼을 눌러 새게임을 시작하시겠습니까?", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: tapStartBtn(_:))
             let cancelAction = UIAlertAction(title: "아직 아님", style: .cancel, handler: nil)
             alert.addAction(okAction)
@@ -351,7 +492,9 @@ extension MainViewController: UICollectionViewDataSource {
 //        let column = indexPath.row % (j + 1)
 //        let value = twoDimensionArray[row][column]
         
-        
+        for i in 0...(cellCount - 1) {
+            firstDimensionArray.append(0)
+        }
         let value = firstDimensionArray[indexPath.row]
 
         cell.userTextField.keyboardType = UIKeyboardType.numberPad
@@ -387,16 +530,7 @@ extension MainViewController: UICollectionViewDataSource {
 //MARK: UICollectionViewFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = collectionView.frame.width
-//        let height = collectionView.frame.height
-//        let itemsPerRow: CGFloat = 3
-//        let widthPadding = sectionInsets.left * (itemsPerRow + 1)
-//        let itemsPerColumn: CGFloat = 3
-//        let heightPadding = sectionInsets.top * (itemsPerColumn + 1)
-//        let cellWidth = (width - widthPadding) / itemsPerRow
-//        let cellHeight = (height - heightPadding) / itemsPerColumn
-//
-//        return CGSize(width: cellWidth - 1, height: cellHeight)
+
         let width = Int(collectionView.frame.width)
         let height = Int(collectionView.frame.height)
         let rows = self.sudokuRow
