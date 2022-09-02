@@ -41,19 +41,19 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hqi-rL-2cV">
-                                        <rect key="frame" x="30" y="25" width="354" height="75"/>
+                                        <rect key="frame" x="65.5" y="25" width="283" height="75"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8c-Vr-dm4">
-                                                <rect key="frame" x="0.0" y="0.0" width="354" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="283" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ROW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-Dg-MfH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="248" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="198" height="35"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vcd-iH-GZI">
-                                                        <rect key="frame" x="248" y="0.0" width="106" height="35"/>
+                                                        <rect key="frame" x="198" y="0.0" width="85" height="35"/>
                                                         <menu key="menu" id="NO9-6F-skN">
                                                             <children>
                                                                 <command title="2" id="Q20-Fx-bmw"/>
@@ -72,16 +72,16 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vi-aW-uhs">
-                                                <rect key="frame" x="0.0" y="40" width="354" height="35"/>
+                                                <rect key="frame" x="0.0" y="40" width="283" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COLUMN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPT-FN-kgl">
-                                                        <rect key="frame" x="0.0" y="0.0" width="248" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="198" height="35"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNA-9S-uRr">
-                                                        <rect key="frame" x="248" y="0.0" width="106" height="35"/>
+                                                        <rect key="frame" x="198" y="0.0" width="85" height="35"/>
                                                         <menu key="menu" id="4lJ-4L-fzr">
                                                             <children>
                                                                 <command title="Item 1" id="DeZ-zX-NTX"/>
@@ -184,7 +184,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="LOW-o6-c2I" secondAttribute="height" multiplier="1:1" id="Kfn-4v-KCU"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xC7-zQ-pA6">
+                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="3" id="xC7-zQ-pA6">
                                                     <size key="itemSize" width="128" height="128"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -274,7 +274,7 @@
                                 <constraints>
                                     <constraint firstItem="P7B-cZ-oj6" firstAttribute="width" secondItem="bvT-mo-uvs" secondAttribute="width" multiplier="0.6" id="G09-Wc-ual"/>
                                     <constraint firstAttribute="trailing" secondItem="bvT-mo-uvs" secondAttribute="trailing" constant="30" id="H30-jc-UeL"/>
-                                    <constraint firstItem="hqi-rL-2cV" firstAttribute="width" secondItem="bvT-mo-uvs" secondAttribute="width" id="Odo-AR-ht9"/>
+                                    <constraint firstItem="hqi-rL-2cV" firstAttribute="width" secondItem="bvT-mo-uvs" secondAttribute="width" multiplier="0.8" id="Odo-AR-ht9"/>
                                     <constraint firstItem="P7B-cZ-oj6" firstAttribute="centerX" secondItem="zPA-Ir-792" secondAttribute="centerX" id="T99-hY-97G"/>
                                     <constraint firstItem="bvT-mo-uvs" firstAttribute="leading" secondItem="zPA-Ir-792" secondAttribute="leading" constant="30" id="aan-XH-Yrs"/>
                                     <constraint firstItem="P7B-cZ-oj6" firstAttribute="top" secondItem="bvT-mo-uvs" secondAttribute="bottom" constant="40" id="mVA-8V-b8c"/>
@@ -298,12 +298,21 @@
                         <outlet property="gameCompleteBtn" destination="qkm-dd-ijs" id="biL-fT-Lmd"/>
                         <outlet property="gameStartBtn" destination="S8M-UX-7yb" id="nKD-ft-Cf4"/>
                         <outlet property="isSumMatchlbl" destination="Lm7-Rx-nB3" id="GrJ-a3-CC3"/>
+                        <outlet property="optionColButton" destination="gNA-9S-uRr" id="HTM-CQ-sHb"/>
+                        <outlet property="optionColLbl" destination="vPT-FN-kgl" id="pr8-Av-Sb3"/>
+                        <outlet property="optionRowButton" destination="Vcd-iH-GZI" id="1c4-UZ-X3V"/>
+                        <outlet property="optionRowLbl" destination="k3P-Dg-MfH" id="537-iU-IJF"/>
+                        <outlet property="optionsStack" destination="hqi-rL-2cV" id="nv0-ks-bMF"/>
                         <outlet property="sudokuCollectionView" destination="LOW-o6-c2I" id="5KD-HY-Wfe"/>
+                        <outlet property="sumColFifthlbl" destination="429-33-ewX" id="ICO-L3-noS"/>
                         <outlet property="sumColFirstlbl" destination="gho-qu-ENg" id="RYW-oV-WPe"/>
+                        <outlet property="sumColFourthlbl" destination="JAA-9N-A1o" id="6MY-gz-4tR"/>
                         <outlet property="sumColSecondlbl" destination="Lug-3P-1zr" id="Xzv-Xu-Ml9"/>
                         <outlet property="sumColThirdlbl" destination="v2x-WL-kNT" id="Pd4-uv-atz"/>
                         <outlet property="sumColumnStack" destination="vRt-9d-T8Z" id="jkB-f3-9jR"/>
+                        <outlet property="sumRowFifthlbl" destination="Uft-IP-U4W" id="Xhv-Ng-z79"/>
                         <outlet property="sumRowFirstlbl" destination="3bI-U8-v6u" id="XrJ-Qt-TH7"/>
+                        <outlet property="sumRowFourthlbl" destination="EB4-ct-pkW" id="FyX-Tk-CyF"/>
                         <outlet property="sumRowSecondlbl" destination="Knh-Iv-TzW" id="MXk-ix-zhA"/>
                         <outlet property="sumRowStack" destination="Zaw-bZ-pBi" id="lmK-1f-Wwm"/>
                         <outlet property="sumRowThirdlbl" destination="FB7-Ia-PX7" id="ym3-N2-AYy"/>

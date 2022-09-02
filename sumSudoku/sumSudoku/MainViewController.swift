@@ -16,8 +16,14 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         setSumLabelText()
         setSumMatchlblText()
     }
+    @IBOutlet weak var optionsStack: UIStackView!
+    @IBOutlet weak var optionRowLbl: UILabel!
+    @IBOutlet weak var optionRowButton: UIButton!
+    @IBOutlet weak var optionColLbl: UILabel!
+    @IBOutlet weak var optionColButton: UIButton!
     
     @IBOutlet weak var sudokuCollectionView: UICollectionView!
+    var minimumInterItemSpacing: CGFloat = 3 //cell, line 간 간격
     
     @IBOutlet weak var sumRowStack: UIStackView!
     @IBOutlet weak var sumColumnStack: UIStackView!
@@ -25,10 +31,15 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     @IBOutlet weak var sumRowFirstlbl: UILabel!
     @IBOutlet weak var sumRowSecondlbl: UILabel!
     @IBOutlet weak var sumRowThirdlbl: UILabel!
+    @IBOutlet weak var sumRowFourthlbl: UILabel!
+    @IBOutlet weak var sumRowFifthlbl: UILabel!
     
     @IBOutlet weak var sumColFirstlbl: UILabel!
     @IBOutlet weak var sumColSecondlbl: UILabel!
     @IBOutlet weak var sumColThirdlbl: UILabel!
+    @IBOutlet weak var sumColFourthlbl: UILabel!
+    @IBOutlet weak var sumColFifthlbl: UILabel!
+   
     
     @IBOutlet weak var isSumMatchlbl: UILabel!
     
@@ -37,8 +48,9 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
-    
-    var sudokuSize: Int = 3
+    var sudokuRow: Int = 5
+    var sudokuCol: Int = 5
+    var cellCount: Int = 25
     
     var firstDimensionArray = [0,0,0,0,0,0,0,0,0]
     var twoDimensionArray = [[0,0,0],[0,0,0],[0,0,0]]
@@ -55,13 +67,17 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     var firstRowSum: Int = 0
     var secondRowSum: Int = 0
     var thirdRowSum: Int = 0
+    var fourthRowSum: Int = 0
+    var fifthRowSum: Int = 0
+    
     var firstColSum: Int = 0
     var secondColSum: Int = 0
     var thirdColSum: Int = 0
+    var fourthColSum: Int = 0
+    var fifthColSum: Int = 0
     
     var isSumnMatch: Bool = false
 
-    var currentInput = ["currentValue": 0, "currentRow": 0, "currentColumn": 0 ]
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
@@ -75,9 +91,15 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         sumRowFirstlbl.text = "\(firstRowSum)"
         sumRowSecondlbl.text = "\(secondRowSum)"
         sumRowThirdlbl.text = "\(thirdRowSum)"
+        sumRowFourthlbl.text = "\(fourthRowSum)"
+        sumRowFifthlbl.text = "\(fifthRowSum)"
+        
         sumColFirstlbl.text = "\(firstColSum)"
         sumColSecondlbl.text = "\(secondColSum)"
         sumColThirdlbl.text = "\(thirdColSum)"
+        sumColFourthlbl.text = "\(fourthColSum)"
+        sumColFifthlbl.text = "\(fifthColSum)"
+        
     }
     
     func getTextFieldInput(didChangedInput value: String) {
@@ -85,7 +107,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         let cells = self.sudokuCollectionView.visibleCells
         print(value)
         
-        for i in 0...8 {
+        for i in 0...(cellCount - 1) {
             if let text = (cells[i] as! SudokuCollectionViewCell).userTextField.text {
                 let index = sudokuCollectionView.indexPath(for: cells[i])?.row
                 firstDimensionArray[index ?? 0] = Int(text) ?? 0
@@ -126,7 +148,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
     }
     
     func textFieldShouldReturn(_ textField: UITextField) {
-//        self.userTextField.resignFirstResponder()
+
     }
     
     func createRandomNums(){
@@ -197,13 +219,17 @@ class MainViewController: UIViewController, UITextFieldDelegate, SendingStringIn
         firstRowSum = 0
         secondRowSum = 0
         thirdRowSum = 0
+        fourthRowSum = 0
+        fifthRowSum = 0
+        
         firstColSum = 0
         secondColSum = 0
         thirdColSum = 0
+        fourthRowSum = 0
+        fifthRowSum = 0
     }
     
     func compareSumResults(){
-        
         
         for i in 0...8 {
             if i%3 == 0 {
@@ -290,25 +316,27 @@ extension MainViewController: UICollectionViewDelegate {
     
 }
 
+//MARK: UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let i: Int = twoDimensionArray.endIndex - 1
-        let j: Int = twoDimensionArray[i].endIndex - 1
-        
-        func countCell(firstD: Int, secondD: Int, arr: [[Int]]) -> Int {
-            var totalCellCount: Int = 0
-            for n in 0...firstD {
-                totalCellCount += arr[n].count
-            }
-            return totalCellCount
-        }
+//        let i: Int = twoDimensionArray.endIndex - 1
+//        let j: Int = twoDimensionArray[i].endIndex - 1
+//
+//        func countCell(firstD: Int, secondD: Int, arr: [[Int]]) -> Int {
+//            var totalCellCount: Int = 0
+//            for n in 0...firstD {
+//                totalCellCount += arr[n].count
+//            }
+//            return totalCellCount
+//        }
         
         // 1.데이터 2중으로 생성할 필요 없음
         
+//        return countCell(firstD: i, secondD: j, arr: twoDimensionArray)
         
-        
-        return countCell(firstD: i, secondD: j, arr: twoDimensionArray)
+        let cellCount = sudokuRow*sudokuCol
+        return cellCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -322,6 +350,8 @@ extension MainViewController: UICollectionViewDataSource {
 //        let row = indexPath.row / (i + 1)
 //        let column = indexPath.row % (j + 1)
 //        let value = twoDimensionArray[row][column]
+        
+        
         let value = firstDimensionArray[indexPath.row]
 
         cell.userTextField.keyboardType = UIKeyboardType.numberPad
@@ -354,19 +384,43 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: UICollectionViewFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width
-        let height = collectionView.frame.height
-        let itemsPerRow: CGFloat = 3
-        let widthPadding = sectionInsets.left * (itemsPerRow + 1)
-        let itemsPerColumn: CGFloat = 3
-        let heightPadding = sectionInsets.top * (itemsPerColumn + 1)
-        let cellWidth = (width - widthPadding) / itemsPerRow
-        let cellHeight = (height - heightPadding) / itemsPerColumn
+//        let width = collectionView.frame.width
+//        let height = collectionView.frame.height
+//        let itemsPerRow: CGFloat = 3
+//        let widthPadding = sectionInsets.left * (itemsPerRow + 1)
+//        let itemsPerColumn: CGFloat = 3
+//        let heightPadding = sectionInsets.top * (itemsPerColumn + 1)
+//        let cellWidth = (width - widthPadding) / itemsPerRow
+//        let cellHeight = (height - heightPadding) / itemsPerColumn
+//
+//        return CGSize(width: cellWidth - 1, height: cellHeight)
+        let width = Int(collectionView.frame.width)
+        let height = Int(collectionView.frame.height)
+        let rows = self.sudokuRow
+        let colummns = self.sudokuCol
         
-        return CGSize(width: cellWidth - 1, height: cellHeight)
+        let cellWidth = (width - 3*(colummns - 1))/colummns
+        let cellHeight = (height - 3*(rows - 1))/rows
         
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        
+        let spacing = minimumInterItemSpacing
+        return spacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        let spacing = minimumInterItemSpacing
+        return spacing
     }
 }
 
